@@ -30,6 +30,7 @@ func StringSum(input string) (output string, err error) {
 	operandsCounter := 0
 
 	if input == "" {
+		output = ""
 		err = errorEmptyInput
 	} else {
 		regex := regexp.MustCompile("-?[0-9]+")
@@ -46,7 +47,9 @@ func StringSum(input string) (output string, err error) {
 
 	if operandsCounter == 2 {
 		output = strconv.Itoa(sum)
+		err = nil
 	} else if operandsCounter != 2 && input != "" {
+		output = ""
 		err = errorNotTwoOperands
 	}
 	return output, err
