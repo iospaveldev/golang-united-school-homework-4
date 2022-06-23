@@ -28,8 +28,8 @@ var (
 
 func StringSum(input string) (output string, err error) {
 	inoutWithoutSpaces := strings.ReplaceAll(input, " ", "")
-	numbersRegex := regexp.MustCompile("-?[a-zA-Z0-9]+")
-	numbers := numbersRegex.FindAllString(inoutWithoutSpaces, -1)
+	elements := regexp.MustCompile("-?[a-zA-Z0-9]+")
+	numbers := elements.FindAllString(inoutWithoutSpaces, -1)
 
 	if input == " " || input == "" {
 		err = fmt.Errorf("custom error: %w", errorEmptyInput)
