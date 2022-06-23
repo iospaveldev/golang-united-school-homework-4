@@ -27,24 +27,31 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
+	inoutWithoutSpaces := strings.ReplaceAll(input, " ", "")
 	numbersRegex := regexp.MustCompile("-?[0-9]+")
-	literalsRegex := regexp.MustCompile("[a-zA-Z]")
+	numbers := numbersRegex.FindAllString(inoutWithoutSpaces, -1)
 
-	inputWithoutSpaces := strings.TrimSpace(input)
-	numbers := numbersRegex.FindAllString(inputWithoutSpaces, -1)
-	literals := literalsRegex.FindAllString(inputWithoutSpaces, -1)
+	splitInout := strings.Split(inoutWithoutSpaces, "")
 
 	if input == " " || input == "" {
 		err = fmt.Errorf("custom error: %w", errorEmptyInput)
-	} else if len(numbers) != 2 || len(literals) > 0 {
+	} else if len(numbers) != 2 {
 		err = fmt.Errorf("custom error: %w", errorNotTwoOperands)
 	} else {
 		sum := 0
-		for _, literal := range numbers {
-			number, _ := strconv.Atoi(literal)
-			sum += number
+		for _, literal := range splitInout {
+			if literal == "+" || literal == "-" {
+				break
+			} else {
+				number, error := strconv.Atoi(literal)
+				if error != nil {
+					output = ""
+					err = fmt.Errorf("custom error: %w", error.(*strconv.NumError))
+				}
+				sum += number
+				output = strconv.Itoa(sum)
+			}
 		}
-		output = strconv.Itoa(sum)
 	}
 	return output, err
 }
