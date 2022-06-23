@@ -1,4 +1,4 @@
-package string_sum
+package main
 
 import (
 	"errors"
@@ -28,10 +28,8 @@ var (
 
 func StringSum(input string) (output string, err error) {
 	inoutWithoutSpaces := strings.ReplaceAll(input, " ", "")
-	numbersRegex := regexp.MustCompile("-?[0-9]+")
+	numbersRegex := regexp.MustCompile("-?[a-zA-Z0-9]+")
 	numbers := numbersRegex.FindAllString(inoutWithoutSpaces, -1)
-
-	splitInout := strings.Split(inoutWithoutSpaces, "")
 
 	if input == " " || input == "" {
 		err = fmt.Errorf("custom error: %w", errorEmptyInput)
@@ -39,18 +37,14 @@ func StringSum(input string) (output string, err error) {
 		err = fmt.Errorf("custom error: %w", errorNotTwoOperands)
 	} else {
 		sum := 0
-		for _, literal := range splitInout {
-			if literal == "+" || literal == "-" {
-				break
-			} else {
-				number, error := strconv.Atoi(literal)
-				if error != nil {
-					output = ""
-					err = fmt.Errorf("custom error: %w", error.(*strconv.NumError))
-				}
-				sum += number
-				output = strconv.Itoa(sum)
+		for _, element := range numbers {
+			number, error := strconv.Atoi(element)
+			if error != nil {
+				output = ""
+				err = fmt.Errorf("custom error: %w", error.(*strconv.NumError))
 			}
+			sum += number
+			output = strconv.Itoa(sum)
 		}
 	}
 	return output, err
