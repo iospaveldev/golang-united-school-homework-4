@@ -27,14 +27,16 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
-	inputWithoutSpaces := strings.TrimSpace(input)
 	regex := regexp.MustCompile("-?[0-9]+")
+	inputWithoutSpaces := strings.TrimSpace(input)
 	numbers := regex.FindAllString(inputWithoutSpaces, -1)
 
+	fmt.Println(numbers)
+
 	if input == " " || input == "" {
-		err = fmt.Errorf("", errorEmptyInput)
+		err = fmt.Errorf("custom error: %w", errorEmptyInput)
 	} else if len(numbers) != 2 {
-		err = fmt.Errorf("", errorNotTwoOperands)
+		err = fmt.Errorf("custom error: %w", errorNotTwoOperands)
 	} else {
 		sum := 0
 		for _, literal := range numbers {
