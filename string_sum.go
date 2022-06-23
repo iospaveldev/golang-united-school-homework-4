@@ -27,14 +27,16 @@ var (
 
 func StringSum(input string) (output string, err error) {
 	inputWithoutSpaces := strings.TrimSpace(input)
+	regex := regexp.MustCompile("-?[0-9]+")
+	numbers := regex.FindAllString(inputWithoutSpaces, -1)
+
 	if input == " " || input == "" {
 		err = errorEmptyInput
-	} else if len(input) < 3 || len(input) > 4 {
+	} else if len(numbers) != 2 {
 		err = errorNotTwoOperands
 	} else {
-		regex := regexp.MustCompile("-?[0-9]+")
 		sum := 0
-		for _, literal := range regex.FindAllString(inputWithoutSpaces, -1) {
+		for _, literal := range numbers {
 			number, _ := strconv.Atoi(literal)
 			sum += number
 		}
