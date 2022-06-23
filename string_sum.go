@@ -29,17 +29,12 @@ func StringSum(input string) (output string, err error) {
 	inputWithoutSpaces := strings.TrimSpace(input)
 	if len(input) == 0 || (len(input) == 1 && strings.Contains(input, " ")) {
 		err = errorEmptyInput
-	} else if len(inputWithoutSpaces) < 3 || len(inputWithoutSpaces) > 4 {
-		err = errorNotTwoOperands
 	} else {
 		regex := regexp.MustCompile("-?[0-9]+")
 		sum := 0
 		for _, literal := range regex.FindAllString(inputWithoutSpaces, -1) {
-			number, error := strconv.Atoi(literal)
-
-			if error == nil {
-				sum += number
-			}
+			number, _ := strconv.Atoi(literal)
+			sum += number
 		}
 		output = strconv.Itoa(sum)
 	}
