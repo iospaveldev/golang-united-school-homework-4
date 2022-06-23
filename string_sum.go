@@ -27,8 +27,10 @@ var (
 
 func StringSum(input string) (output string, err error) {
 	inputWithoutSpaces := strings.TrimSpace(input)
-	if len(input) == 0 || (len(input) == 1 && strings.Contains(input, " ")) {
+	if input == " " || input == "" {
 		err = errorEmptyInput
+	} else if len(input) < 3 || len(input) > 4 {
+		err = errorNotTwoOperands
 	} else {
 		regex := regexp.MustCompile("-?[0-9]+")
 		sum := 0
