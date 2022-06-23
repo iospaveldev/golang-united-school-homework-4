@@ -2,6 +2,7 @@ package string_sum
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -31,9 +32,9 @@ func StringSum(input string) (output string, err error) {
 	numbers := regex.FindAllString(inputWithoutSpaces, -1)
 
 	if input == " " || input == "" {
-		err = errorEmptyInput
+		err = fmt.Errorf("", errorEmptyInput)
 	} else if len(numbers) != 2 {
-		err = errorNotTwoOperands
+		err = fmt.Errorf("", errorNotTwoOperands)
 	} else {
 		sum := 0
 		for _, literal := range numbers {
