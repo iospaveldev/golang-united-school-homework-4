@@ -40,8 +40,7 @@ func StringSum(input string) (output string, err error) {
 		for _, element := range numbers {
 			number, error := strconv.Atoi(element)
 			if error != nil {
-				output = ""
-				err = fmt.Errorf("custom error: %w", error.(*strconv.NumError))
+				err = fmt.Errorf("%w", error.(*strconv.NumError))
 			}
 			sum += number
 			output = strconv.Itoa(sum)
