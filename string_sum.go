@@ -41,6 +41,7 @@ func StringSum(input string) (output string, err error) {
 			number, error := strconv.Atoi(element)
 			if error != nil {
 				err = fmt.Errorf("%w", error.(*strconv.NumError))
+				return "", err
 			} else {
 				sum += number
 				output = strconv.Itoa(sum)
