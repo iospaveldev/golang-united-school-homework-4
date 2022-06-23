@@ -1,4 +1,4 @@
-package string_sum
+package main
 
 import (
 	"errors"
@@ -27,15 +27,16 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
-	regex := regexp.MustCompile("-?[0-9]+")
-	inputWithoutSpaces := strings.TrimSpace(input)
-	numbers := regex.FindAllString(inputWithoutSpaces, -1)
+	numbersRegex := regexp.MustCompile("-?[0-9]+")
+	literalsRegex := regexp.MustCompile("[a-zA-Z]")
 
-	fmt.Println(numbers)
+	inputWithoutSpaces := strings.TrimSpace(input)
+	numbers := numbersRegex.FindAllString(inputWithoutSpaces, -1)
+	literals := literalsRegex.FindAllString(inputWithoutSpaces, -1)
 
 	if input == " " || input == "" {
 		err = fmt.Errorf("custom error: %w", errorEmptyInput)
-	} else if len(numbers) != 2 {
+	} else if len(numbers) != 2 || len(literals) > 0 {
 		err = fmt.Errorf("custom error: %w", errorNotTwoOperands)
 	} else {
 		sum := 0
